@@ -73,25 +73,25 @@ else
 fi
 
 # Step 9: Ensure /var/lib/icinga2/certs directory exists and has the correct permissions
-echo "${YELLOW}📌 [Step 9] Ensuring /var/lib/icinga2/certs directory exists and has correct permissions...${RESET}\n"
+echo -e "${YELLOW}📌 [Step 9] Ensuring /var/lib/icinga2/certs directory exists and has correct permissions...${RESET}\n"
 mkdir -p /var/lib/icinga2/certs
 chown -R nagios:nagios /var/lib/icinga2/certs
-echo "${GREEN}✅ Directory ensured and permissions set.${RESET}\n"
+echo -e "${GREEN}✅ Directory ensured and permissions set.${RESET}\n"
 
 # Step 10: Generate a new local self-signed certificate (for the agent node)
-echo "${YELLOW}📌 [Step 10] Generating a new local self-signed certificate...${RESET}\n"
+echo -e "${YELLOW}📌 [Step 10] Generating a new local self-signed certificate...${RESET}\n"
 HOSTNAME="$LOCAL_ZONE_NAME"
 icinga2 pki new-cert --cn $HOSTNAME \
   --key /var/lib/icinga2/certs/$HOSTNAME.key \
   --cert /var/lib/icinga2/certs/$HOSTNAME.crt
-echo "${GREEN}✅ Certificate generated.${RESET}\n"
+echo -e "${GREEN}✅ Certificate generated.${RESET}\n"
 
 # Step 11: Verify Parent Connection by fetching the parent instance’s certificate
-echo "${YELLOW}📌 [Step 11] Verifying parent connection by fetching the master certificate...${RESET}\n"
+echo -e "${YELLOW}📌 [Step 11] Verifying parent connection by fetching the master certificate...${RESET}\n"
 MASTER_HOST="$MASTER_IP_FQDN" 
 icinga2 pki save-cert --trustedcert /var/lib/icinga2/certs/trusted-parent.crt \
   --host $MASTER_HOST
-echo "${GREEN}✅ Parent certificate saved.${RESET}\n"
+echo -e "${GREEN}✅ Parent certificate saved.${RESET}\n"
 
 # Step 12: Enable Icinga2 API
 echo -e "${YELLOW}📌 [Step 12] Enabling Icinga2 API...${RESET}"
