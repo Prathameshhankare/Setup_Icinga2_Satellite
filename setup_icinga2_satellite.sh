@@ -138,7 +138,6 @@ echo -e "${GREEN}✅ API user added to /etc/icinga2/conf.d/api-users.conf.${RESE
 
 # Step 15: Rename hosts.conf file if it exists
 echo -e "${YELLOW}📌 [Step 15] Checking if hosts.conf exists before renaming...${RESET}"
-
 if [ -f /etc/icinga2/conf.d/hosts.conf ]; then
     sudo mv /etc/icinga2/conf.d/hosts.conf /etc/icinga2/conf.d/hosts.conf.bak
     echo -e "${GREEN}✅ hosts.conf file renamed to hosts.conf.bak.${RESET}\n"
