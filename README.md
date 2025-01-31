@@ -41,6 +41,7 @@ TICKET="c9ad4df64226700e8401f1236e3cdcd5d44d18a7"
 LOCAL_ZONE_NAME="XXSUPSAT01"
 API_USERNAME="XXSUPSAT01"
 API_PASSWORD="Password"
+```
 
 ## Troubleshooting
 - If the script fails at a step, check the logs in /var/log/icinga2/icinga2.log.
