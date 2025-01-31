@@ -130,12 +130,17 @@ object ApiUser \"$API_USERNAME\" {
 
 echo -e "${GREEN}✅ API user added to /etc/icinga2/conf.d/api-users.conf.${RESET}\n"
 
-# Step 15: Restart Icinga2
+# Step 15: Rename hosts.conf file
+echo -e "${YELLOW}📌 [Step 15] Renaming hosts.conf file...${RESET}"
+sudo mv /etc/icinga2/conf.d/hosts.conf /etc/icinga2/conf.d/hosts.conf.bak
+echo -e "${GREEN}✅ hosts.conf file renamed to host.conf.bak.${RESET}\n"
+
+# Step 16: Restart Icinga2
 echo -e "${YELLOW}📌 [Step 15] Restarting Icinga2 service...${RESET}"
 sudo systemctl restart icinga2
 echo -e "${GREEN}✅ Icinga2 service restarted.${RESET}\n"
 
-# Step 16: Final status check
+# Step 17: Final status check
 echo -e "${YELLOW}📌 [Step 16] Final Icinga2 service status check...${RESET}"
 if systemctl is-active --quiet icinga2; then
     echo -e "${GREEN}✅ Icinga2 service is running.${RESET}\n"
