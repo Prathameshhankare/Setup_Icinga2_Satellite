@@ -12,6 +12,9 @@ UBUNTU_CODENAME=$(lsb_release -sc)  # Detect Ubuntu release codename dynamically
 API_USERNAME="XXSUPSAT01"  # Using hostname as the API username (satellite server command name)
 API_PASSWORD="Password"  # Define a password for the API user
 
+# Script current directory
+SCRIPT_DIR="$(dirname "$(realpath "$0")")"
+
 # Color codes for output
 YELLOW="\033[1;33m"
 GREEN="\033[1;32m"
@@ -138,6 +141,7 @@ echo -e "${GREEN}✅ API user added to /etc/icinga2/conf.d/api-users.conf.${RESE
 
 # Step 15: Rename hosts.conf file if it exists
 echo -e "${YELLOW}📌 [Step 15] Checking if hosts.conf exists before renaming...${RESET}"
+
 if [ -f /etc/icinga2/conf.d/hosts.conf ]; then
     sudo mv /etc/icinga2/conf.d/hosts.conf /etc/icinga2/conf.d/hosts.conf.bak
     echo -e "${GREEN}✅ hosts.conf file renamed to hosts.conf.bak.${RESET}\n"
@@ -146,14 +150,19 @@ else
 fi
 
 # Step 16: Restart Icinga2
-echo -e "${YELLOW}📌 [Step 15] Restarting Icinga2 service...${RESET}\n"
+echo -e "${YELLOW}📌 [Step 16] Restarting Icinga2 service...${RESET}\n"
 sudo systemctl restart icinga2
 echo -e "${GREEN}✅ Icinga2 service restarted.${RESET}\n"
 
 # Step 17: Add check_mem.pl command
 echo -e "${YELLOW}📌 [Step 17] Adding check_mem.pl nagios command...${RESET}\n"
-sudo cp check_mem.pl /usr/lib/nagios/plugins/
-echo -e "${GREEN}✅ Added check_mem.pl nagios command.${RESET}\n"
+if [ -f "/usr/lib/nagios/plugins/check_mem.pl" ]; then
+    echo -e "${BLUE}🛠️   check_mem.pl already exists. Skipping copy.${RESET}\n"
+else
+    sudo cp "$SCRIPT_DIR/check_mem.pl" /usr/lib/nagios/plugins/
+    sudo chmod +x /usr/lib/nagios/plugins/check_mem.pl
+    echo -e "${GREEN}✅ Added check_mem.pl nagios command.${RESET}\n"
+fi
 
 # Step 18: Final status check
 echo -e "${YELLOW}📌 [Step 18] Final Icinga2 service status check...${RESET}\n"
