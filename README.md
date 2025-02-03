@@ -10,6 +10,7 @@ This script automates the setup and configuration of an Icinga2 Satellite Node o
 - Sets up Icinga2 certificates and verifies parent connection
 - Configures Icinga2 API and Node setup
 - Creates API users with full permissions
+- Adds Nagios check_mem.pl plugin to the directory
 - Restarts and verifies the Icinga2 service status
 
 ## Prerequisites
